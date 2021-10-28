@@ -46,9 +46,15 @@
             </Button>
 
             <StackPanel>
+<<<<<<< HEAD
                 <Border Width="80" Height="80" HorizontalAlignment="Center">
                     <Border.Background>
                         <ImageBrush ImageSource="../Assets/Images/ds_icon.png"/>
+=======
+                <Border>
+                    <Border.Background>
+                        <ImageBrush ImageSource="../Assets/Images/Logo.png"/>
+>>>>>>> 8d2624a20840e5c97de8315c74dfe2bbf0cef6b8
                     </Border.Background>
                 </Border>
             </StackPanel>
