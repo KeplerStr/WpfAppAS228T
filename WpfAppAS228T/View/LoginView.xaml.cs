@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using WpfAppAS228T.ViewModel;
 
 namespace WpfAppAS228T.View
 {
@@ -22,6 +23,14 @@ namespace WpfAppAS228T.View
         public LoginView()
         {
             InitializeComponent();
+
+            this.DataContext = new LoginViewModel();
+        }
+
+        private void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+                this.DragMove();
         }
     }
 }
