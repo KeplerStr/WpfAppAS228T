@@ -22,6 +22,7 @@ namespace WpfAppAS228T.Common
         }
 
         static bool _isUpdating = false;
+
         private static void OnPropertyChanged(DependencyObject d,DependencyPropertyChangedEventArgs e)
         {
             PasswordBox password = d as PasswordBox;

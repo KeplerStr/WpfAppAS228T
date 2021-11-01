@@ -11,6 +11,7 @@ namespace WpfAppAS228T.Model
     {
         private string _userName;
 
+
         public string UserName
         {
             get { return _userName; }

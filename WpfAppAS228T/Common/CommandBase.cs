@@ -10,6 +10,11 @@ namespace WpfAppAS228T.Common
     public class CommandBase : ICommand
     {
         public event EventHandler CanExecuteChanged;
+        //public event EventHandler CanExecuteChanged
+        //{
+        //    add { CommandManager.RequerySuggested += value; }
+        //    remove { CommandManager.RequerySuggested -= value; }
+        //}
 
         public bool CanExecute(object parameter)
         {
@@ -26,5 +31,11 @@ namespace WpfAppAS228T.Common
         public Action<object> DoExecute { get; set; }
 
         public Func<object, bool> DoCanExecute { get; set; }
+
+
+        public void RaiseCanExecuteChanged()
+        {
+            CanExecuteChanged?.Invoke(this, new EventArgs());
+        }
     }
 }
