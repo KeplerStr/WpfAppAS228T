@@ -6,6 +6,34 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "1305097",
+      "name": "IP",
+      "font_class": "IP",
+      "unicode": "e632",
+      "unicode_decimal": 58930
+    },
+    {
+      "icon_id": "3868272",
+      "name": "节点管理",
+      "font_class": "jiedianguanli",
+      "unicode": "eb64",
+      "unicode_decimal": 60260
+    },
+    {
+      "icon_id": "7124015",
+      "name": "端口",
+      "font_class": "duankou",
+      "unicode": "e601",
+      "unicode_decimal": 58881
+    },
+    {
+      "icon_id": "4485682",
+      "name": "最大化",
+      "font_class": "zuidahua",
+      "unicode": "e600",
+      "unicode_decimal": 58880
+    },
+    {
       "icon_id": "15838526",
       "name": "share",
       "font_class": "share",

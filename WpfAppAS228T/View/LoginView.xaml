@@ -358,6 +358,7 @@
                                 </Style.Triggers>
                             </Style>
                         </UniformGrid.Resources>
+                        
                         <TextBlock Text="标"/>
                         <Border Background="Gray"/>
                         <TextBlock Text="标"/>

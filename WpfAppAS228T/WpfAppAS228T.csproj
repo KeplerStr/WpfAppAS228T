@@ -38,6 +38,7 @@
     <Reference Include="NModbus, Version=3.0.62.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\NModbus.3.0.62\lib\net46\NModbus.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationFramework.Aero2" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -58,6 +59,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Model\TestPageMode.cs" />
+    <Compile Include="ViewModel\TestPageViewModel.cs" />
+    <Compile Include="View\ProjectPageView.xaml.cs">
+      <DependentUpon>ProjectPageView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TestPageView.xaml.cs">
+      <DependentUpon>TestPageView.xaml</DependentUpon>
+    </Compile>
     <Page Include="Assets\Styles\DefaultStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -87,6 +96,14 @@
       <DependentUpon>MainView.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\ProjectPageView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\TestPageView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">

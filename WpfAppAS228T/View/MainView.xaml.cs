@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WpfAppAS228T.ViewModel;
 
 namespace WpfAppAS228T.View
 {
@@ -23,6 +24,11 @@ namespace WpfAppAS228T.View
         public MainView()
         {
             InitializeComponent();
+
+            MainViewModel model = new MainViewModel();
+            this.DataContext = model;
+
+            //this.MaxHeight = SystemParameters.PrimaryScreenHeight;
         }
 
         private void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
