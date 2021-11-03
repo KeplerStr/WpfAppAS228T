@@ -59,7 +59,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Model\TestPageMode.cs" />
+    <Compile Include="Model\TestPageModel.cs" />
     <Compile Include="ViewModel\TestPageViewModel.cs" />
     <Compile Include="View\ProjectPageView.xaml.cs">
       <DependentUpon>ProjectPageView.xaml</DependentUpon>

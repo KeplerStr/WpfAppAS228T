@@ -7,7 +7,7 @@ using WpfAppAS228T.Common;
 
 namespace WpfAppAS228T.Model
 {
-    class TestPageMode : NotifyBase
+    class TestPageModel : NotifyBase
     {
         private string _IP;
         public string IP
@@ -97,5 +97,18 @@ namespace WpfAppAS228T.Model
             }
         }
 
+        private string _stateMessage;
+        public string StateMessage
+        {
+            get { return _stateMessage; }
+            set { _stateMessage = value; this.DoNotify(); }
+        }
+
+        private string _funcomboboxIndex;
+        public string FunComboBoxIndex
+        {
+            get { return _funcomboboxIndex; }
+            set { _funcomboboxIndex = value; this.DoNotify(); }
+        }
     }
 }

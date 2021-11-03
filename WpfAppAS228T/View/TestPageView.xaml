@@ -8,7 +8,7 @@
              xmlns:model="clr-namespace:WpfAppAS228T.Model" 
              xmlns:common="clr-namespace:WpfAppAS228T.Common"
              d:DataContext="{d:DesignInstance Type=common:NotifyBase}" x:Class="WpfAppAS228T.View.TestPageView"
-             mc:Ignorable="d" 
+             mc:Ignorable="d" Name="window"
              d:DesignHeight="800" d:DesignWidth="1250">
     <UserControl.Resources>
         <ResourceDictionary Source="../Assets/Styles/DefaultStyle.xaml"/>
@@ -40,9 +40,9 @@
                                 <RowDefinition Height="1*"/>
                                 <RowDefinition Height="1*"/>
                             </Grid.RowDefinitions>
-                            <TextBox Grid.Row="0" Text="{Binding TestPageMode.IP,UpdateSourceTrigger=PropertyChanged}"  FontSize="16" Height="35"
+                            <TextBox Grid.Row="0" Text="{Binding TestPageModel.IP,UpdateSourceTrigger=PropertyChanged}"  FontSize="16" Height="35"
                                      Style="{DynamicResource IconIPTextBoxStyle}"/>
-                            <TextBox Grid.Row="1" Text="{Binding TestPageMode.Port,UpdateSourceTrigger=PropertyChanged}" FontSize="16" Height="35" 
+                            <TextBox Grid.Row="1" Text="{Binding TestPageModel.Port,UpdateSourceTrigger=PropertyChanged}" FontSize="16" Height="35" 
                                      Style="{DynamicResource IconPortTextBoxStyle}">
                                 <TextBox.Resources>
                                     <Style x:Key="IconPortTextBoxStyle" TargetType="{x:Type TextBox}">
@@ -120,7 +120,10 @@
                                     <ColumnDefinition Width="1*"/>
                                     <ColumnDefinition Width="1*"/>
                                 </Grid.ColumnDefinitions>
-                                <Button Grid.Column="0" Content="Open" Foreground="White" Margin="0,0,5,0" Style="{DynamicResource OpenButtonStyle}" Grid.RowSpan="3">
+                                <Button Grid.Column="0" Content="Open" 
+                                        Foreground="White" Margin="0,0,5,0" Style="{DynamicResource OpenButtonStyle}" Grid.RowSpan="3"
+                                        Command="{Binding OpenDeviceCommand}"
+                                        CommandParameter="{Binding ElementName=window}">
                                     <Button.Resources>
                                         <Style x:Key="FocusVisual">
                                             <Setter Property="Control.Template">
@@ -203,7 +206,10 @@
 
                                     </Button.Resources>
                                 </Button>
-                                <Button Grid.Column="1" Content="Close" Foreground="White" Margin="5,0,0,0" Style="{DynamicResource FunButtonStyle}" Grid.RowSpan="3"/>
+                                <Button Grid.Column="1" Content="Close" Foreground="White" Margin="5,0,0,0" 
+                                        Style="{DynamicResource FunButtonStyle}" Grid.RowSpan="3"
+                                        Command="{Binding CloseDeviceCommand}"
+                                        CommandParameter="{Binding ElementName=window}"/>
                             </Grid>
                         </Grid>
                     </Grid>
@@ -219,7 +225,10 @@
                             <RowDefinition Height="1*"/>
                             <RowDefinition Height="1*"/>
                         </Grid.RowDefinitions>
-                        <ComboBox Grid.Row="0"  VerticalContentAlignment="Center" Height="35" Style="{DynamicResource FunComboBoxStyle}">
+                        <ComboBox Grid.Row="0"  VerticalContentAlignment="Center" 
+                                  Height="35" Style="{DynamicResource FunComboBoxStyle}"
+                                  SelectedIndex="{Binding TestPageModel.FunComboBoxIndex,UpdateSourceTrigger=PropertyChanged}">
+                            
                             <ComboBox.Resources>
                                 <LinearGradientBrush x:Key="ComboBox.Static.Background" EndPoint="0,1" StartPoint="0,0">
                                     <GradientStop Color="#FFF0F0F0" Offset="0.0"/>
@@ -494,10 +503,11 @@
                                 </Style>
                             </ComboBox.Resources>
 
-                            <ComboBoxItem FontSize="16" IsSelected="True" 
-                                          Content="0x01: 读线圈" VerticalContentAlignment="Center"
+                            <ComboBoxItem FontSize="16" IsSelected="True"
+                                          Content="0x01: 读线圈" VerticalContentAlignment="Center" 
                                           Foreground="Red" MinWidth="20" 
-                                          HorizontalAlignment="Left" Height="35" Width="232"/>
+                                          HorizontalAlignment="Left" Height="35" Width="232"
+                                          />
                             <ComboBoxItem FontSize="16"
                                           Content="0x02: 读离散量输入" VerticalContentAlignment="Center"
                                           Foreground="DarkKhaki" MinWidth="20" 
@@ -519,10 +529,6 @@
                                           Foreground="DarkOliveGreen" MinWidth="20" 
                                           HorizontalAlignment="Left" Height="35" Width="232"/>
                             <ComboBoxItem FontSize="16"
-                                          Content="0x03: 读保持寄存器" VerticalContentAlignment="Center"
-                                          Foreground="Firebrick" MinWidth="20" 
-                                          HorizontalAlignment="Left" Height="35" Width="232"/>
-                            <ComboBoxItem FontSize="16"
                                           Content="0x06: 写单个保持寄存器" VerticalContentAlignment="Center"
                                           Foreground="Gold" MinWidth="20" 
                                           HorizontalAlignment="Left" Height="35" Width="232"/>
@@ -539,7 +545,7 @@
                             </Grid.ColumnDefinitions>
                             <Label Content="Slave ID:" Height="35" FontSize="16" HorizontalAlignment="Left"
                                    VerticalAlignment="Center"/>
-                            <TextBox Grid.Column="1" TextWrapping="Wrap" Text="{Binding TestPageMode.Slave_ID,UpdateSourceTrigger=PropertyChanged}" Height="35" MinLines="20" 
+                            <TextBox Grid.Column="1" TextWrapping="Wrap" Text="{Binding TestPageModel.Slave_ID,UpdateSourceTrigger=PropertyChanged}" Height="35" MinLines="20" 
                                      FontSize="16" VerticalAlignment="Center" MinHeight="20" Style="{DynamicResource CircularTextBoxStyle}"/>
                         </Grid>
                         <Grid Grid.Row="2" Height="35">
@@ -547,7 +553,10 @@
                                 <ColumnDefinition Width="1.5*"/>
                                 <ColumnDefinition Width="2*"/>
                             </Grid.ColumnDefinitions>
-                            <Button Grid.Column="1" Content="Send" Foreground="White" Margin="0,0,0,0" Style="{DynamicResource FunButtonStyle}" Grid.RowSpan="3"></Button>
+                            <Button Grid.Column="1" Content="Send" Foreground="White" 
+                                    Margin="0,0,0,0" Style="{DynamicResource FunButtonStyle}" Grid.RowSpan="3"
+                                    Command="{Binding SendMessageCommand}"
+                                    CommandParameter="{Binding ElementName=window}"/>
                         </Grid>
                     </Grid>
 
@@ -572,7 +581,7 @@
                             </Grid.ColumnDefinitions>
                             <Label Content="Address  :" Height="35" FontSize="16" HorizontalAlignment="Left"
                                    VerticalAlignment="Center"/>
-                            <TextBox Grid.Column="1" TextWrapping="Wrap" Text="{Binding TestPageMode.Address,UpdateSourceTrigger=PropertyChanged}" Height="35" MinLines="20" 
+                            <TextBox Grid.Column="1" TextWrapping="Wrap" Text="{Binding TestPageModel.Address,UpdateSourceTrigger=PropertyChanged}" Height="35" MinLines="20" 
                                      FontSize="16" VerticalAlignment="Center" MinHeight="20" Style="{DynamicResource CircularTextBoxStyle}"/>
                         </Grid>
                         
@@ -583,7 +592,7 @@
                             </Grid.ColumnDefinitions>
                             <Label Content="Quantity :" Height="35" FontSize="16" HorizontalAlignment="Left"
                                    VerticalAlignment="Center"/>
-                            <TextBox Grid.Column="1" TextWrapping="Wrap" Text="{Binding TestPageMode.Quantity,UpdateSourceTrigger=PropertyChanged}" Height="35" MinLines="20" 
+                            <TextBox Grid.Column="1" TextWrapping="Wrap" Text="{Binding TestPageModel.Quantity,UpdateSourceTrigger=PropertyChanged}" Height="35" MinLines="20" 
                                      FontSize="16" VerticalAlignment="Center" MinHeight="20" Style="{DynamicResource CircularTextBoxStyle}"/>
                         </Grid>
                         <Grid Grid.Row="2" Height="35">
@@ -593,7 +602,7 @@
                             </Grid.ColumnDefinitions>
                             <Label Content="Value      :" Height="35" FontSize="16" HorizontalAlignment="Left"
                                    VerticalAlignment="Center"/>
-                            <TextBox Grid.Column="1" TextWrapping="Wrap" Text="{Binding TestPageMode.Value,UpdateSourceTrigger=PropertyChanged}" Height="35" MinLines="20" 
+                            <TextBox Grid.Column="1" Text="{Binding TestPageModel.Value,UpdateSourceTrigger=PropertyChanged}" Height="35" MinLines="20" 
                                      FontSize="16" VerticalAlignment="Center" MinHeight="20" Style="{DynamicResource CircularTextBoxStyle}"/>
                         </Grid>
                         
@@ -622,7 +631,10 @@
                 
             </Border>
 
-            <TextBlock Grid.Row="2" Text="测试界面" Foreground="Red" VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
+            <TextBlock Grid.Row="2" Text="{Binding TestPageModel.StateMessage}"  Foreground="Red" 
+                       FontSize="16"
+                       VerticalAlignment="Bottom" TextWrapping="Wrap"
+                       HorizontalAlignment="Right"/>
         </Grid>
 
     </ScrollViewer>
