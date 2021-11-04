@@ -11,6 +11,7 @@ namespace WpfAppAS228T.Model
     {
         private string _userName;
 
+
         public string UserName
         {
             get { return _userName; }
@@ -25,8 +26,8 @@ namespace WpfAppAS228T.Model
         public string Password
         {
             get { return _password; }
-            set
-            {
+            set 
+            { 
                 _password = value;
                 this.DoNotify();
             }

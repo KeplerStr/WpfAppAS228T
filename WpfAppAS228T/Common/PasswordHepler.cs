@@ -22,6 +22,7 @@ namespace WpfAppAS228T.Common
         }
 
         static bool _isUpdating = false;
+
         private static void OnPropertyChanged(DependencyObject d,DependencyPropertyChangedEventArgs e)
         {
             PasswordBox password = d as PasswordBox;
@@ -48,6 +49,7 @@ namespace WpfAppAS228T.Common
             password.PasswordChanged += Password_PasswordChanged;
         }
 
+        
         private static void Password_PasswordChanged(object sender, RoutedEventArgs e)
         {
             PasswordBox passwordBox = sender as PasswordBox;

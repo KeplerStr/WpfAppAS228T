@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using WpfAppAS228T.View;
 
 namespace WpfAppAS228T
 {
@@ -13,5 +14,17 @@ namespace WpfAppAS228T
     /// </summary>
     public partial class App : Application
     {
+
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
+            if (new LoginView().ShowDialog() == true)
+            {
+                new MainView().ShowDialog();
+            }
+
+            Application.Current.Shutdown();
+        }
+
     }
 }
