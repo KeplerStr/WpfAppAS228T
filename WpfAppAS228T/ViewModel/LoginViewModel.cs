@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using WpfAppAS228T.Common;
+using WpfAppAS228T.DataAccess;
 using WpfAppAS228T.Model;
 
 namespace WpfAppAS228T.ViewModel
@@ -63,8 +64,13 @@ namespace WpfAppAS228T.ViewModel
                 return ShowProgress == Visibility.Collapsed; });
         }
 
+        private LocalDataAccess access;
+
+
         private void DoLogin(object obj)
         {
+            access = new LocalDataAccess();
+
             this.ShowProgress = Visibility.Visible;
             this.ErrorMessage = "";
 
@@ -100,7 +106,9 @@ namespace WpfAppAS228T.ViewModel
                 try
                 {
 
-                    if (LoginModel.UserName == "kepler" && LoginModel.Password == "123456")
+                    var user = LocalDataAccess.GetInstance().CheckUserInfo(LoginModel.UserName, LoginModel.Password);
+
+                    if (user != null)
                     {
                         Application.Current.Dispatcher.Invoke(new Action(() =>
                         {
@@ -108,9 +116,21 @@ namespace WpfAppAS228T.ViewModel
                         }));
                     }
                     else
-                    {
                         throw new Exception("登录失败！用户名或密码错误！");
-                    }
+
+
+
+                    //if (LoginModel.UserName == "kepler" && LoginModel.Password == "123456")
+                    //{
+                    //    Application.Current.Dispatcher.Invoke(new Action(() =>
+                    //    {
+                    //        (obj as Window).DialogResult = true;
+                    //    }));
+                    //}
+                    //else
+                    //{
+                    //    throw new Exception("登录失败！用户名或密码错误！");
+                    //}
 
                     //var user = LocalDataAccess.GetInstance().CheckUserInfo(LoginModel.UserName, LoginModel.Password);
                     //if (user == null)

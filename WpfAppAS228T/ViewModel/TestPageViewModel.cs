@@ -1,6 +1,8 @@
 ﻿using NModbus;
+using NModbus.Logging;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
@@ -12,14 +14,20 @@ using WpfAppAS228T.Model;
 
 namespace WpfAppAS228T.ViewModel
 {
+
+    
     class TestPageViewModel : NotifyBase
     {
+        
+        private ModbusFactory _factory;
+        private IModbusMaster _master;
+
+        private TcpClient _tcpClient;
+
         public TestPageModel TestPageModel { get; set; }
 
         public CommandBase OpenDeviceCommand { get; set; }
         public CommandBase CloseDeviceCommand { get; set; }
-
-        public CommandBase FunComboBoxChangeCommand { get; set; }
 
         public CommandBase SendMessageCommand { get; set; }
 
@@ -34,11 +42,13 @@ namespace WpfAppAS228T.ViewModel
             this.TestPageModel.Slave_ID = "0x01";
             this.TestPageModel.Quantity = "0x01";
             this.TestPageModel.Value = "0x01";
-            this.TestPageModel.Address = "0x0001";
+            this.TestPageModel.Address = "0x64";
             this.TestPageModel.StateMessage = "错误提示";
             this.TestPageModel.FunComboBoxIndex = "0";
 
             this.IsConnected = false;
+
+            
 
             this.OpenDeviceCommand = new CommandBase();
             this.OpenDeviceCommand.DoExecute = new Action<object>(DoOpenDevice);
@@ -57,30 +67,6 @@ namespace WpfAppAS228T.ViewModel
             this.SendMessageCommand.DoCanExecute = new Func<object, bool>((o) => {
                 return true;
             });
-
-            this.FunComboBoxChangeCommand = new CommandBase();
-            this.FunComboBoxChangeCommand.DoExecute = new Action<object>(DoFunComboBoxChange);
-            this.FunComboBoxChangeCommand.DoCanExecute = new Func<object, bool>((o) => true);
-
-            
-        }
-
-        private void DoFunComboBoxChange(object obj)
-        {
-            int index = int.Parse(obj.ToString());
-
-            switch (index)
-            {
-                case 0:
-                    this.TestPageModel.StateMessage = "0";
-                    break;
-                case 1:
-                    this.TestPageModel.StateMessage = "1";
-                    break;
-                default:
-                    this.TestPageModel.StateMessage = "default";
-                    break;
-            }
         }
 
         ~TestPageViewModel()
@@ -95,9 +81,8 @@ namespace WpfAppAS228T.ViewModel
             }
         }
 
-        private ModbusFactory _factory;
-        private IModbusMaster _master;
-        private TcpClient _tcpClient;
+        
+
         private void DoSendMessage(object obj)
         {
             int index = int.Parse(this.TestPageModel.FunComboBoxIndex);
@@ -204,7 +189,6 @@ namespace WpfAppAS228T.ViewModel
             {
                 this.TestPageModel.StateMessage = "未建立连接";
             }
-
         }
 
         private void DoOpenDevice(object obj)
@@ -230,6 +214,7 @@ namespace WpfAppAS228T.ViewModel
                         }
                         catch (Exception ex)
                         {
+                            LogHelper.WriteLog("TCP连接", ex);
                             TestPageModel.StateMessage = $"{ex}";
                         }
                     }
@@ -241,6 +226,7 @@ namespace WpfAppAS228T.ViewModel
                 catch (Exception ex)
                 {
                     TestPageModel.StateMessage = ex.Message;
+                    LogHelper.WriteLog("IP地址", ex);
                 }
             }
         }
