@@ -16,6 +16,9 @@
 # Mono auto generated files
 mono_crash.*
 
+# 不忽略sqlite数据库
+!*.db
+
 # Build results
 [Dd]ebug/
 [Dd]ebugPublic/
@@ -32,6 +35,7 @@ bld/
 [Oo]ut/
 [Ll]og/
 [Ll]ogs/
+
 
 # Visual Studio 2015/2017 cache/options directory
 .vs/
