@@ -86,6 +86,7 @@
     <Compile Include="Common\LogHelper.cs" />
     <Compile Include="DataAccess\DataEntity\UserEntity.cs" />
     <Compile Include="DataAccess\LocalDataAccess.cs" />
+    <Compile Include="Tool\SerialPortHepler.cs" />
     <Compile Include="Tool\SQLiteColumn.cs" />
     <Compile Include="Tool\SQLiteColumnList.cs" />
     <Compile Include="Tool\SQLiteHelper.cs" />

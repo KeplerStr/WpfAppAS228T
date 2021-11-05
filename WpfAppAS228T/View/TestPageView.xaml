@@ -626,9 +626,6 @@
                 <Border.Effect>
                     <DropShadowEffect Color="#F2F2F2" ShadowDepth="10" BlurRadius="105" Opacity="0.4" Direction="270"/>
                 </Border.Effect>
-
-
-
             </Border>
 
             <TextBlock Grid.Row="2" Text="{Binding TestPageModel.StateMessage}"  Foreground="Red" 

@@ -196,6 +196,9 @@ namespace WpfAppAS228T.ViewModel
             int tcpPort = int.Parse(this.TestPageModel.Port);
             string ipAddress = this.TestPageModel.IP;
 
+
+            Tool.SerialPortHepler serialPort = new Tool.SerialPortHepler();
+
             if (!IsConnected)
             {
                 try
