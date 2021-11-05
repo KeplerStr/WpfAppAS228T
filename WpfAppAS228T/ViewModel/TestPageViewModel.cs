@@ -16,7 +16,7 @@ namespace WpfAppAS228T.ViewModel
 {
 
     
-    class TestPageViewModel : NotifyBase
+    public class TestPageViewModel : NotifyBase
     {
         
         private ModbusFactory _factory;
@@ -45,6 +45,7 @@ namespace WpfAppAS228T.ViewModel
             this.TestPageModel.Address = "0x64";
             this.TestPageModel.StateMessage = "错误提示";
             this.TestPageModel.FunComboBoxIndex = "0";
+            this.TestPageModel.TestValueCode = "0.1234";
 
             this.IsConnected = false;
 
@@ -82,7 +83,6 @@ namespace WpfAppAS228T.ViewModel
         }
 
         
-
         private void DoSendMessage(object obj)
         {
             int index = int.Parse(this.TestPageModel.FunComboBoxIndex);
@@ -195,6 +195,9 @@ namespace WpfAppAS228T.ViewModel
         {
             int tcpPort = int.Parse(this.TestPageModel.Port);
             string ipAddress = this.TestPageModel.IP;
+
+
+            Tool.SerialPortHepler serialPort = new Tool.SerialPortHepler(this);
 
             if (!IsConnected)
             {

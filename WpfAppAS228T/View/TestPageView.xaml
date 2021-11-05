@@ -228,7 +228,7 @@
                         <ComboBox Grid.Row="0"  VerticalContentAlignment="Center" 
                                   Height="35" Style="{DynamicResource FunComboBoxStyle}"
                                   SelectedIndex="{Binding TestPageModel.FunComboBoxIndex,UpdateSourceTrigger=PropertyChanged}">
-                            
+
                             <ComboBox.Resources>
                                 <LinearGradientBrush x:Key="ComboBox.Static.Background" EndPoint="0,1" StartPoint="0,0">
                                     <GradientStop Color="#FFF0F0F0" Offset="0.0"/>
@@ -584,7 +584,7 @@
                             <TextBox Grid.Column="1" TextWrapping="Wrap" Text="{Binding TestPageModel.Address,UpdateSourceTrigger=PropertyChanged}" Height="35" MinLines="20" 
                                      FontSize="16" VerticalAlignment="Center" MinHeight="20" Style="{DynamicResource CircularTextBoxStyle}"/>
                         </Grid>
-                        
+
                         <Grid Grid.Row="1" Height="35">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="1.5*"/>
@@ -605,14 +605,14 @@
                             <TextBox Grid.Column="1" Text="{Binding TestPageModel.Value,UpdateSourceTrigger=PropertyChanged}" Height="35" MinLines="20" 
                                      FontSize="16" VerticalAlignment="Center" MinHeight="20" Style="{DynamicResource CircularTextBoxStyle}"/>
                         </Grid>
-                        
+
                     </Grid>
                 </Border>
                 <Border CornerRadius="5" Background="White" Margin="10">
                     <Border.Effect>
                         <DropShadowEffect Color="#F2F2F2" ShadowDepth="10" BlurRadius="105" Opacity="0.4" Direction="270"/>
                     </Border.Effect>
-                    
+
                     <DataGrid FontSize="16" VerticalScrollBarVisibility="Visible" HeadersVisibility="All">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Time" Width="100" Binding="{Binding Time}"/>
@@ -627,6 +627,45 @@
                     <DropShadowEffect Color="#F2F2F2" ShadowDepth="10" BlurRadius="105" Opacity="0.4" Direction="270"/>
                 </Border.Effect>
 
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Border Margin="10,10,0,0" Grid.Row="0" HorizontalAlignment="Left" 
+                        VerticalAlignment="Top" Background="Black" Width="400" Height="150">
+                        <Border.Effect>
+                            <DropShadowEffect Color="#F2F2F2" ShadowDepth="10" BlurRadius="105" Opacity="0.4" Direction="270"/>
+                        </Border.Effect>
+                        <Grid>
+                            <TextBlock Text="{Binding TestPageModel.TestValueCode}" 
+                               Foreground="YellowGreen" FontWeight="Bold" FontSize="50" VerticalAlignment="Center" HorizontalAlignment="Center">
+                            </TextBlock>
+
+                            <Label Content="mV/V" Margin="5,5"
+                                   HorizontalAlignment="Right" 
+                                   VerticalAlignment="Top" FontSize="20"
+                                   Foreground="YellowGreen"/>
+                        </Grid>
+                    </Border>
+
+                    <Border Margin="10,10,0,0" Grid.Column="1" HorizontalAlignment="Left" 
+                        VerticalAlignment="Top" Background="Black" Width="350" Height="150">
+                        <Border.Effect>
+                            <DropShadowEffect Color="#F2F2F2" ShadowDepth="10" BlurRadius="105" Opacity="0.4" Direction="270"/>
+                        </Border.Effect>
+                        <TextBlock Text="{Binding TestPageModel.TestValueCode}" 
+                               Foreground="Red" FontWeight="Bold" FontSize="50" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        </TextBlock>
+                    </Border>
+
+
+
+                </Grid>
+                
+                
+
+                
 
 
             </Border>
