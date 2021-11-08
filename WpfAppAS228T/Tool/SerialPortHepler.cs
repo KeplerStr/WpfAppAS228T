@@ -10,6 +10,7 @@ using WpfAppAS228T.ViewModel;
 
 namespace WpfAppAS228T.Tool
 {
+    
 
     public class SerialPortHepler
     {
@@ -110,43 +111,52 @@ namespace WpfAppAS228T.Tool
             byte[] buf = new byte[n];//声明一个临时数组存储当前来的串口数据  
             //received_count += n;//增加接收计数
             int hex = 0;
+            //if (n != 0)
+            //{
+                //serialPort.Read(buf, 0, n);
+                //hex = serialPort.ReadByte();
+            //}
 
             while ((hex = serialPort.ReadByte()) != -1)
             {
                 //this.meter6000DataAccess.GetRxpackage((byte)hex);
                 //if (this.meter6000DataAccess.Running_sate == Meter6000DataAccess.PackageSate.END)
-                //{
+            //{
                 //    string ing = Encoding.Default.GetString(this.meter6000DataAccess.RxPackage.Data_message.ToArray());
                 //    this.TestPageViewModel.TestPageModel.TestValueCode = ing;
                 //    this.meter6000DataAccess.Running_sate = Meter6000DataAccess.PackageSate.START;
-                //}
+            //}
 
                 this.meter2000DataAccess.GetRxpackage((byte)hex);
                 if (this.meter2000DataAccess.Running_sate == Meter2000DataAccess.PackageSate.END)
-                {
+                        {
                     this.meter2000DataAccess.Rxpackage.Data_message.Reverse();
 
                     this.meter2000DataAccess.Rxpackage.Data_message.Insert(this.meter2000DataAccess.Rxpackage.Data_message.Count - (this.meter2000DataAccess.Rxpackage.State2[0] & 0x0F) + 1, (byte)'.');
 
                     if ((this.meter2000DataAccess.Rxpackage.State2[0] & 0x80) == 0x80)
-                    {
+                        {
                         this.meter2000DataAccess.Rxpackage.Data_message.Insert(0,(byte)'-');
-                    }
-                    else
-                    {
+                        }
+                        else
+                        {
                         this.meter2000DataAccess.Rxpackage.Data_message.Insert(0, (byte)' ');
-                    }
+                        }
 
 
 
                     
 
 
+                        string ing = Encoding.Default.GetString(this.vsdata.Skip(5).Take(11).ToArray());
 
                     string ing = Encoding.Default.GetString(this.meter2000DataAccess.Rxpackage.Data_message.ToArray());
                     this.TestPageViewModel.TestPageModel.TestValueCode = ing;
                     this.meter2000DataAccess.Running_sate = Meter2000DataAccess.PackageSate.START;
-                
+
+                        break;
+                    default:
+                        break;
                 }
 
 
