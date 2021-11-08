@@ -18,7 +18,7 @@ namespace WpfAppAS228T.Tool
 
         private TestPageViewModel TestPageViewModel;
 
-        private System.Timers.Timer _timerWaterTank = new System.Timers.Timer(500); //500ms的定时器任务
+        private System.Timers.Timer _timerWaterTank = new System.Timers.Timer(100); //500ms的定时器任务
         public SerialPortHepler()
         {
             if (serialPort == null)
@@ -41,7 +41,7 @@ namespace WpfAppAS228T.Tool
             serialPort.DataReceived += new SerialDataReceivedEventHandler(SerialPortDataReceived); // 添加数据接收 
 
             string str = "%YY;22\r";
-            byte[] decBytes = System.Text.Encoding.UTF8.GetBytes(str);
+            byte[] decBytes = System.Text.Encoding.ASCII.GetBytes(str);
             serialPort.Write(decBytes, 0,decBytes.Length);
             
         }
@@ -54,7 +54,8 @@ namespace WpfAppAS228T.Tool
             TestPageViewModel = testPageViewModel;
             if (serialPort == null)
             {
-                serialPort = new SerialPort("COM1", 9600, Parity.None, 8, StopBits.One);
+                //serialPort = new SerialPort("COM1", 9600, Parity.None, 8, StopBits.One);
+                serialPort = new SerialPort("COM1", 19200, Parity.None, 8, StopBits.One);
             }
 
             try
@@ -75,9 +76,9 @@ namespace WpfAppAS228T.Tool
             _timerWaterTank.AutoReset = true;
             _timerWaterTank.Start();
 
-            //string str = "%00;22\r";
-            //byte[] decBytes = System.Text.Encoding.ASCII.GetBytes(str);
-            //serialPort.Write(decBytes, 0, decBytes.Length);
+            string str = "%00;22\r";
+            byte[] decBytes = System.Text.Encoding.ASCII.GetBytes(str);
+            serialPort.Write(decBytes, 0, decBytes.Length);
         }
 
         private void _timerWaterTank_Tick(object sender, EventArgs e)
@@ -85,20 +86,32 @@ namespace WpfAppAS228T.Tool
             System.Timers.Timer timer = sender as System.Timers.Timer;
             //要计时的时间秒数
 
-            if (meter2000DataAccess.Rxpackage.State1.Count != 0)
-            {
-                if (((meter2000DataAccess.Rxpackage.State1[0] >> 4) & 0x01) == 0x01)
-                {
+            //if (meter2000DataAccess.Rxpackage.State1.Count != 0)
+            //{
+            //    if (((meter2000DataAccess.Rxpackage.State1[0] >> 4) & 0x01) == 0x01)
+            //    {
 
-                }
-                else
+            //    }
+            //    else
+            //    {
+            //        string str = "%1";
+            //        byte[] decBytes = System.Text.Encoding.ASCII.GetBytes(str);
+            //        serialPort.Write(decBytes, 0, decBytes.Length);
+            //        //System.Threading.Thread.Sleep(1000);
+            //    }    
+            //}
+
+            if (meter6000DataAccess.RxPackage.Meter_state.Count > 0)
+            {
+                if ((meter6000DataAccess.RxPackage.Meter_state[0] & 0x01) == 0x01)
                 {
-                    string str = "%1";
+                    string str = "%00;07\r";
                     byte[] decBytes = System.Text.Encoding.ASCII.GetBytes(str);
                     serialPort.Write(decBytes, 0, decBytes.Length);
-                    //System.Threading.Thread.Sleep(1000);
-                }    
+                }
             }
+            
+
             
         }
 
@@ -119,35 +132,40 @@ namespace WpfAppAS228T.Tool
 
             while ((hex = serialPort.ReadByte()) != -1)
             {
-                //this.meter6000DataAccess.GetRxpackage((byte)hex);
-                //if (this.meter6000DataAccess.Running_sate == Meter6000DataAccess.PackageSate.END)
-            //{
-                //    string ing = Encoding.Default.GetString(this.meter6000DataAccess.RxPackage.Data_message.ToArray());
-                //    this.TestPageViewModel.TestPageModel.TestValueCode = ing;
-                //    this.meter6000DataAccess.Running_sate = Meter6000DataAccess.PackageSate.START;
-            //}
+                this.meter6000DataAccess.GetRxpackage((byte)hex);
+                if (this.meter6000DataAccess.Running_sate == Meter6000DataAccess.PackageSate.END)
+                {
+                    if (this.meter6000DataAccess.RxPackage.Data_message[0] == '+')
+                    {
+                        this.meter6000DataAccess.RxPackage.Data_message[0] = (byte)' ';
+                    }
+
+                    string ing = Encoding.Default.GetString(this.meter6000DataAccess.RxPackage.Data_message.Take((this.meter6000DataAccess.RxPackage.Meter_state[3]&0x0F)+2).ToArray());
+                    this.TestPageViewModel.TestPageModel.TestValueCode = ing;
+                    this.meter6000DataAccess.Running_sate = Meter6000DataAccess.PackageSate.START;
+                }
+
+
 
                 this.meter2000DataAccess.GetRxpackage((byte)hex);
                 if (this.meter2000DataAccess.Running_sate == Meter2000DataAccess.PackageSate.END)
-                        {
+                {
                     this.meter2000DataAccess.Rxpackage.Data_message.Reverse();
 
                     this.meter2000DataAccess.Rxpackage.Data_message.Insert(this.meter2000DataAccess.Rxpackage.Data_message.Count - (this.meter2000DataAccess.Rxpackage.State2[0] & 0x0F) + 1, (byte)'.');
 
                     if ((this.meter2000DataAccess.Rxpackage.State2[0] & 0x80) == 0x80)
                     {
-                    this.meter2000DataAccess.Rxpackage.Data_message.Insert(0,(byte)'-');
+                        this.meter2000DataAccess.Rxpackage.Data_message.Insert(0,(byte)'-');
                     }
                     else
                     {
-                    this.meter2000DataAccess.Rxpackage.Data_message.Insert(0, (byte)' ');
+                        this.meter2000DataAccess.Rxpackage.Data_message.Insert(0, (byte)' ');
                     }
 
                     string ing = Encoding.Default.GetString(this.meter2000DataAccess.Rxpackage.Data_message.ToArray());
                     this.TestPageViewModel.TestPageModel.TestValueCode = ing;
                     this.meter2000DataAccess.Running_sate = Meter2000DataAccess.PackageSate.START;
-
-
                 }
 
 

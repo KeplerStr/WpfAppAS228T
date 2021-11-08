@@ -198,6 +198,7 @@ namespace WpfAppAS228T.ViewModel
 
 
             Tool.SerialPortHepler serialPort = new Tool.SerialPortHepler(this);
+            Tool.ExcelHepler excelHepler = new Tool.ExcelHepler();
 
             if (!IsConnected)
             {

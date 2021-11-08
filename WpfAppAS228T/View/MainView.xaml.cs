@@ -23,10 +23,15 @@ namespace WpfAppAS228T.View
     {
         public MainView()
         {
+            
+
             InitializeComponent();
 
             MainViewModel model = new MainViewModel();
             this.DataContext = model;
+
+
+            
 
             //this.MaxHeight = SystemParameters.PrimaryScreenHeight;
         }
